@@ -10,6 +10,9 @@
 
 height = input("Введите Ваш рост сантиметрах: ")
 weight = input("Введите Ваш вес в килограммах: ")
-bmi = round(float(weight)/(float(height)/100)**2)
+bmi = round(float(weight)/(float(height)/100)**2, 1)       # расчет bmi, округляем до десятых
+cost = round((50-20)/19, 2)                                # считаем цену '=' как в примере
+before_pipe = int((bmi-16)/cost)                           # кол-во целых '=' до '|'
+after_pipe = int((50-bmi+0.76)/cost)                       # кол-во целых '=' после '|', истинный размер шкалы 50.76
 print("Ваш индекс массы тела:", bmi)
-print("16"+(bmi-17)*"="+"|"+(49-bmi)*"="+"50")
+print("16" + before_pipe*"=" + "|" + after_pipe*"=" + "50")
