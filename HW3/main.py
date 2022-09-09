@@ -17,7 +17,7 @@ value3 = int(input("Третье: "))
 a = value1 and value2 and value3 and "Нет нулевых значений!!!"
 print(a)
 
-# 2.Вывести первое ненулевое значение. Если введены все нули - вывести "Введены все нули!" (цикл не использовать) без if - использовать лень
+# # 2.Вывести первое ненулевое значение. Если введены все нули - вывести "Введены все нули!" (цикл не использовать) без if - использовать лень
 print("Введите три целых числа")
 value1 = int(input("Первое: "))
 value2 = int(input("Второе: "))
@@ -25,36 +25,34 @@ value3 = int(input("Третье: "))
 a = value1 or value2 or value3 or "Введены все нули!"
 print(a)
 
-# 3. Если первое значение больше чем сумма второго и третьего вывести a - b - c
+# # 3. Если первое значение больше чем сумма второго и третьего вывести a - b - c
 print("Введите три целых числа")
-value1 = int(input("Первое: "))
-value2 = int(input("Второе: "))
-value3 = int(input("Третье: "))
-if value1 > (value2 + value3): 
-    res = value1 - value2 - value3
-    print("a - b - c =", res)
+value1 = int(input("a: "))
+value2 = int(input("b: "))
+value3 = int(input("c: "))
+s = value1 > (value2 + value3) and ("a - b - c = " + str(value1 - value2 - value3))
+print(s)
 
-# 4. Если первое значение меньше чем сумма второго и третьего вывести b + c - a
+# # 4. Если первое значение меньше чем сумма второго и третьего вывести b + c - a
 print("Введите три целых числа")
-value1 = int(input("Первое: "))
-value2 = int(input("Второе: "))
-value3 = int(input("Третье: "))
-if value1 < (value2 + value3): 
-    res = value2 + value3 - value1
-    print("b + c - a =", res)
+value1 = int(input("a: "))
+value2 = int(input("b: "))
+value3 = int(input("c: "))
+s = value1 < (value2 + value3) and ("b + c - a = " + str(value2 + value3 - value1))
+print(s)
 
 # 5. Если первое значение больше 50 и при этом одно из оставшихся значение больше первого вывести "Вася"
 print("Введите три целых числа")
 value1 = int(input("Первое: "))
 value2 = int(input("Второе: "))
 value3 = int(input("Третье: "))
-if (value1 > 50) and ((value2 > value1) or (value3 > value1)): 
-    print("Вася")
+a = (value1 > 50) and ((value2 > value1) or (value3 > value1)) and "Вася"
+print(a)
 
 # 6. Если первое значение больше 5 или оба из оставшихся значений равны 7 вывести "Петя"
 print("Введите три целых числа")
 value1 = int(input("Первое: "))
 value2 = int(input("Второе: "))
 value3 = int(input("Третье: "))
-if (value1 > 5) or ((value2 == 7) and (value3 == 7)): 
-    print("Петя")
+a = ((value1 > 5) and "Петя") or ((value2 == 7) and (value3 == 7) and "Петя") 
+print(a)
