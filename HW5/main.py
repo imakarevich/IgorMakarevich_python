@@ -37,9 +37,4 @@ start_to_finish = round(start_to_finish, 2)
 print("The distance between start and finish points is", start_to_finish)
 
 
-
-
-
-
-
     
