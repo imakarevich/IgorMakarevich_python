@@ -2,7 +2,7 @@ from datetime import datetime
 import time
 import os
 
-square = '00'
+square = '$$'
 space = '\u0020'
 numbers = {'0': (square*6, square*6, square*2 + space*4 + square*2, square*2 + space*4 + square*2, square*2 + space*4 + square*2, square*2 + space*4 + square*2, square*2 + space*4 + square*2, square*6, square*6),
            '1': (space*8 + square*2, space*8 + square*2, space*8 + square*2, space*8 + square*2, space*8 + square*2, space*8 + square*2, space*8 + square*2, space*8 + square*2, space*8 + square*2),
