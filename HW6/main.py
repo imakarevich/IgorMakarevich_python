@@ -1,12 +1,8 @@
-# \u273A
-# 0:'\u2B1B\u2B1B\u2B1B\u2B1B\u2B1B\u2B1B\n\u2B1B\u2B1B\u2B1B\u2B1B\u2B1B\u2B1B\n\u2B1B\u2B1B\u0020\u0020\u0020\u0020\u2B1B\u2B1B\n\u2B1B\u2B1B\u0020\u0020\u0020\u0020\u2B1B\u2B1B\n\u2B1B\u2B1B\u0020\u0020\u0020\u0020\u2B1B\u2B1B\n\u2B1B\u2B1B\u2B1B\u2B1B\u2B1B\u2B1B\n\u2B1B\u2B1B\u2B1B\u2B1B\u2B1B\u2B1B'
-# (space*10 + square*2 + '\n')*9
-# square = '\u2B1B'
-# \033[2J - очистка экрана
 from datetime import datetime
 import time
+import os
 
-square = '\u2B1B'
+square = '00'
 space = '\u0020'
 numbers = {'0': (square*6, square*6, square*2 + space*4 + square*2, square*2 + space*4 + square*2, square*2 + space*4 + square*2, square*2 + space*4 + square*2, square*2 + space*4 + square*2, square*6, square*6),
            '1': (space*8 + square*2, space*8 + square*2, space*8 + square*2, space*8 + square*2, space*8 + square*2, space*8 + square*2, space*8 + square*2, space*8 + square*2, space*8 + square*2),
@@ -24,7 +20,7 @@ numbers = {'0': (square*6, square*6, square*2 + space*4 + square*2, square*2 + s
 while True:
     current_time = datetime.now().time()
     current_time_str = current_time.strftime('%H%M%S')
-    print('\033[2J') #screen clean
+    os.system('cls||clear') #screen clean
     for pos1, pos2, pos3, pos4, pos5, pos6, separator in zip(numbers[current_time_str[0]], numbers[current_time_str[1]], numbers[current_time_str[2]], numbers[current_time_str[3]], numbers[current_time_str[4]], numbers[current_time_str[5]], numbers[':']):
         print(pos1, pos2, separator, pos3, pos4, separator, pos5, pos6)
     time.sleep(.00001)
