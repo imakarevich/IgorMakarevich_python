@@ -15,11 +15,20 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from app_reference_book import views as ref
 
-from myapp.views import index_page
 
 
 urlpatterns = [
     path('admin/', admin.site.urls), 
-    path('', index_page),
+    path('publishing_house/', ref.ListPublishingHouse.as_view()),
+    path('publishing_house_create/', ref.CreatePublishingHouse.as_view()),
+    path('publishing_house_read/<int:pk>', ref.ReadPublishingHouse.as_view()),
+    path('publishing_house_update/<int:pk>', ref.UpdatePublishingHouse.as_view()),
+    path('publishing_house_delete/<int:pk>', ref.DeletePublishingHouse.as_view()),
+    path('authors/', ref.ListAuthors.as_view()),
+    path('authors_create/', ref.CreateAuthors.as_view()),
+    path('authors_read/<int:pk>', ref.ReadAuthors.as_view()),
+    path('authors_update/<int:pk>', ref.UpdateAuthors.as_view()),
+    path('authors_delete/<int:pk>', ref.DeleteAuthors.as_view()),
 ]
