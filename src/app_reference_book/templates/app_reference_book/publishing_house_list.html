@@ -8,16 +8,16 @@
 </head>
 <body>
     <h1>LIST</h1>
-    <a href="/publishing_house_create/">ADD NEW</a>
+    <a href="{% url 'app_reference_book:publishing-house-create'%}">ADD NEW</a>
     <table border="1">
         {% for obj in object_list %}
         <tr>
             <td>{{obj.pk}}</td>
             <td>{{obj.name}}</td>
             <td style="width: 500px;">{{obj.description}}</td>
-            <td><a href="/genres_update/{{obj.pk}}">Edit</a></td>
-            <td><a href="/genres_delete/{{obj.pk}}">Delete</a></td>
-            <td><a href="/genres_read/{{obj.pk}}">Details</a></td>
+            <td><a href="{% url 'app_reference_book:publishing-house-update' pk=obj.pk %}">Edit</a></td>
+            <td><a href="{% url 'app_reference_book:publishing-house-delete' pk=obj.pk %}">Delete</a></td>
+            <td><a href="{% url 'app_reference_book:publishing-house-detail' pk=obj.pk %}">Details</a></td>
         </tr>
         {% endfor %}
     </table>
