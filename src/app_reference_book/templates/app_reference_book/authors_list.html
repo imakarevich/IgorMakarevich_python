@@ -1,26 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LIST</title>
-</head>
-<body>
-    <h1>LIST</h1>
-    <a href="{% url 'app_reference_book:authors-create'%}">ADD NEW</a>
-    <table border="1">
-        {% for obj in object_list %}
-        <tr>
-            <td>{{obj.pk}}</td>
-            <td>{{obj.last_name}}</td>
-            <td>{{obj.first_name}}</td>
-            <td style="width: 500px;">{{obj.description}}</td>
-            <td><a href="{% url 'app_reference_book:authors-update' pk=obj.pk %}">Edit</a></td>
-            <td><a href="{% url 'app_reference_book:authors-delete' pk=obj.pk %}">Delete</a></td>
-            <td><a href="{% url 'app_reference_book:authors-detail' pk=obj.pk %}">Details</a></td>
-        </tr>
-        {% endfor %}
-    </table>
-</body>
-</html>
+{% extends 'base.html' %}
+{% block title %}LIST AUTHORS{% endblock title %}
+{% block body %}
+<a href="{% url 'app_reference_book:authors-create'%}">ADD NEW</a>
+<table class="table table-hover">
+    {% for obj in object_list %}
+    <tr>
+        <td>{{obj.pk}}</td>
+        <td>{{obj.last_name}}</td>
+        <td>{{obj.first_name}}</td>
+        <td style="width: 500px;">{{obj.description}}</td>
+        <td><a href="{% url 'app_reference_book:authors-update' pk=obj.pk %}">Edit</a></td>
+        <td><a href="{% url 'app_reference_book:authors-delete' pk=obj.pk %}">Delete</a></td>
+        <td><a href="{% url 'app_reference_book:authors-detail' pk=obj.pk %}">Details</a></td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock body %}
