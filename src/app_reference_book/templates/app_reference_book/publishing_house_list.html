@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}LIST PUBLISHING HOUSE{% endblock title %}
 {% block body %}
-    <h1>LIST PUBLISHING HOUSE</h1>
+    <h1>LIST PUBLISHING HOUSES</h1>
     <a href="{% url 'app_reference_book:publishing-house-create'%}">ADD NEW</a>
     <table class="table table-hover">
         {% for obj in object_list %}

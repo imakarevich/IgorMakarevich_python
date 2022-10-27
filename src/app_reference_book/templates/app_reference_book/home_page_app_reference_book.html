@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %}HOME PAGE{% endblock title %}
+{% block body %}
+<br><br><br>
+<h1>Справочники</h1>
+<a href="{% url 'app_reference_book:authors-list' %}" class="btn btn-outline-warning">Авторы</a>
+<a href="{% url 'app_reference_book:genres-list' %}" class="btn btn-warning">Жанры</a>
+<a href="{% url 'app_reference_book:publishing-house-list' %}" class="btn btn-warning">Издательства</a>
+<a href="{% url 'app_reference_book:series-list' %}" class="btn btn-outline-warning">Серии</a>
+{% endblock body %}

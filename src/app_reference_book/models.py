@@ -11,6 +11,12 @@ class PublishingHouse(models.Model):
 class Authors(models.Model):
     first_name = models.CharField(max_length=40)
     last_name = models.CharField(max_length=40 )
+    photo = models.ImageField(
+        verbose_name="authors photo",
+        upload_to='upload/%Y/%m/%d',
+        blank=True,
+        null=True
+    )
     description = models.TextField(blank=True, null=True)
     def __str__(self):
         return f'{self.first_name} {self.last_name} {self.description}'

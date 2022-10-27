@@ -6,6 +6,7 @@
     {% for obj in object_list %}
     <tr>
         <td>{{obj.pk}}</td>
+        <td>{% if obj.photo %}<img src="{{obj.photo.url}}" alt="{{obj.photo}}">{% else %}<p>No photo</p>{% endif %}</td>
         <td>{{obj.last_name}}</td>
         <td>{{obj.first_name}}</td>
         <td style="width: 500px;">{{obj.description}}</td>

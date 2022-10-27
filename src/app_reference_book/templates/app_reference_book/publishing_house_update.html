@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 {% block title %}UPDATE PUBLISHING HOUSE{% endblock title %}
 {% block body %}
     <h1>UPDATE PUBLISHING HOUSE</h1>
     <form action="" method="post">
         {% csrf_token %}
-        {{ form.as_p }}
+        {{ form|crispy }}
         <input type="submit" value="Update">
     </form>
 {% endblock body %}
