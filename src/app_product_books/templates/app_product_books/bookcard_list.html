@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}LIST BOOKCARD{% endblock title %}
+{% block body %}
+<a href="{% url 'app_product_books:bookcard-create' %}">ADD NEW</a>
+<table class="table table-hover">
+    {% for obj in object_list %}
+    <tr>
+        <td>{{ obj.pk }}</td>
+        <td>{{ obj.name }}</td>
+        <td>{% if obj.picture %}<img style="width: 30px;" src="{{ obj.picture.url }}" alt="{{ obj.photo }}">{% else %}<p>No photo</p>{% endif %}</td>
+        <td>{{ obj.price }}</td>
+        {% comment %} <td style="width: 500px;">{{ obj.description }}</td> {% endcomment %}
+        <td>{% for auth_obj in obj.authors.all %} {{auth_obj}} {% endfor %}</td>
+        <td>{{ obj.serie.get }}</td>
+        <td>{{ obj.genre.get }}</td>
+        <td>{{ obj.year_of_publishing }}</td>
+        <td>{{ obj.pages }}</td>
+        <td>{{ obj.cover }}</td>
+        <td>{{ obj.format }}</td>
+        <td>{{ obj.isbn }}</td>
+        <td>{{ obj.age_restrictions }}</td>
+        <td>{% for pub_obj in obj.publishing.all %} {{pub_obj}} {% endfor %}</td>
+        <td>{{ obj.availability }}</td>
+        <td>{{ obj.active }}</td>
+        <td>{{ obj.rating }}</td>
+        <td>{{ obj.date_entered_catalog }}</td>
+        <td>{{ obj.date_last_modified }}</td>
+        <td><a href="{% url 'app_product_books:bookcard-update' pk=obj.pk %}">Edit</a></td>
+        <td><a href="{% url 'app_product_books:bookcard-delete' pk=obj.pk %}">Delete</a></td>
+        <td><a href="{% url 'app_product_books:bookcard-detail' pk=obj.pk %}">Details</a></td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock body %}

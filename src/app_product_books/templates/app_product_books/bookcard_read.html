@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% block title %}Купить книгу {{ object.name }}{% endblock title %}
+{% block body %}
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-3">
+            <img style="width: 100%;" src="{{ object.picture.url }}" alt="{{ object.picture }}">
+            {% if object.active %}<a style="margin-top: 5%;" class="btn btn-warning" href="#" role="button">Купить: {{ object.price }} руб.</a>
+            <p style="color: grey;">В наличии {{ object.availability }} шт.</p>
+            {% else %}<a style="margin-top: 5%;" class="btn btn-danger" href="#" role="button">Нет в наличии</a>
+            {% endif %}
+        </div>
+        <div style="overflow: auto; height: 400px;" class="col-9">
+            <h1>{{ object.name }}</h1>
+            <p>{{ object.description }}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8">
+            <table class="table">
+                <tr>
+                    <td>Авторы:</td>
+                    <td>{% for auth_obj in object.authors.all %} {{auth_obj}}; {% endfor %}</td>
+                </tr>
+                <tr>
+                    <td>Издательство:</td>
+                    <td>{% for pub_obj in object.publishing.all %} {{pub_obj}} {% endfor %}</td>
+                </tr>
+                <tr>
+                    <td>Жанр:</td>
+                    <td>{{ object.genre.get }};</td>
+                </tr>
+                <tr>
+                    <td>Серия</td>
+                    <td>{{ object.serie.get }};</td>
+                </tr>
+                <tr>
+                    <td>Год издания</td>
+                    <td>{{ object.year_of_publishing }}</td>
+                </tr>
+                <tr>
+                    <td>Страниц</td>
+                    <td>{{ object.pages }}</td>
+                </tr>
+                <tr>
+                    <td>Переплет</td>
+                    <td>{{ object.cover }}</td>
+                </tr>
+                <tr>
+                    <td>Формат</td>
+                    <td>{{ object.format }}</td>
+                </tr>
+                <tr>
+                    <td>ISBN</td>
+                    <td>{{ object.isbn }}</td>
+                </tr>
+                <tr>
+                    <td>Вес (гр)</td>
+                    <td>{{ object.weight }}</td>
+                </tr>
+                <tr>
+                    <td>Возрастные ограничения</td>
+                    <td>{{ object.age_restrictions }}</td>
+                </tr>
+            </table>    
+        </div>
+        <div class="col-2"></div>
+    </div>
+</div>
+{% endblock body %}

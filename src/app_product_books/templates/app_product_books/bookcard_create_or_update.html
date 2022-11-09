@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}{{ operation_name }} AUTHORS{% endblock title %}
+{% block body %}
+    <h1>{{ operation_name }}</h1>
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <input type="submit" value="{{ operation_name }}">
+    </form>
+{% endblock body %}
