@@ -127,6 +127,3 @@ class DeleteSeries(generic.DeleteView):
 class ListSeries(generic.ListView):
     model = models.Series
     template_name = 'app_reference_book/series_list.html'
-
-class HomePage(generic.TemplateView):
-    template_name = 'app_reference_book/home_page_app_reference_book.html'

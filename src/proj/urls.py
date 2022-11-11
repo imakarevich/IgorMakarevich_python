@@ -18,11 +18,13 @@ from django.urls import path, include
 
 from django.conf import settings
 from django.conf.urls.static import static
-from app_reference_book.views import HomePage
+from app_home_page.views import HomePage
 
 urlpatterns = [
     path('admin/', admin.site.urls), 
     path('app_reference_book/', include('app_reference_book.urls', namespace = 'app_reference_book')),
-    path('', HomePage.as_view(), name = 'Home_page'),
+    path('', HomePage.as_view(), name = 'home_page'),
     path('app_product_books/', include('app_product_books.urls', namespace = 'app_product_books')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+

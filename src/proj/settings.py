@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'app_home_page',
     'app_reference_book',
     'app_product_books',
     'crispy_forms',
