@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block title %}Административный портал{% endblock title %}
+{% block style %}
+    <style>
+     .dropdown:hover .dropdown-menu {
+        display: block;
+        margin-top: 0;
+        top: 0;
+        right: auto;
+        left: 100%;
+        margin-top: 0;
+        margin-left: var(--bs-dropdown-spacer);
+    }
+    </style>    
+{% endblock style %}
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-5 col-sm-5 col-md-4 col-lg-2">
+            <table class="table table-hover">
+                <tr>
+                    <td>
+                        <div class="dropdown dropend">
+                            <a href="#" class="text-uppercase nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Справочники</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Издательства</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="{% url 'app_reference_book:authors-list' %}">Авторы</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">Жанры</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">Серии</a></li>
+                                <!-- <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li> -->
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="dropdown dropend">
+                            <a href="#" class="text-uppercase nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Товары</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#" class="text-uppercase nav-link">Заказы</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#" class="text-uppercase nav-link">A third link item</a>                        
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-7 col-sm-7 col-md-8 col-lg-10">
+            {% block content%}{% endblock content%}
+        </div>
+    </div>
+</div>
+{% endblock body %}

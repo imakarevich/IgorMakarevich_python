@@ -1,11 +1,10 @@
-{% extends 'base.html' %}
+{% extends 'base_admin_portal.html' %}
 {% load crispy_forms_tags %}
-{% block title %}UPDATE AUTHOR{% endblock title %}
-{% block body %}
-    <h1>UPDATE AUTHOR</h1>
+{% block content%}
+    <h1>{{ object.first_last_name }}</h1>
     <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form|crispy }}
-        <input type="submit" value="Update">
+        <input type="submit" value="Обновить">
     </form>
-{% endblock body %}
+{% endblock content %}

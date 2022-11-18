@@ -9,14 +9,20 @@ class PublishingHouse(models.Model):
         return f'{self.name}'
 
 class Authors(models.Model):
-    first_last_name = models.CharField(max_length=100)
+    first_last_name = models.CharField(
+        max_length=100,
+        verbose_name="ФИО"
+        )
     photo = models.ImageField(
-        verbose_name="authors photo",
+        verbose_name="Фотография",
         upload_to='upload/Authors/',
         blank=True,
         null=True
     )
-    description = models.TextField(blank=True, null=True)
+    description = models.TextField(
+        verbose_name="Описание",
+        blank=True,
+        null=True)
     def __str__(self):
         return f'{self.first_last_name}'
 

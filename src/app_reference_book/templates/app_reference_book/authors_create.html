@@ -1,11 +1,12 @@
-{% extends 'base.html' %}
+{% extends 'base_admin_portal.html' %}
+{% block content%}
+
 {% load crispy_forms_tags %}
-{% block title %}CREATE AUTHORS{% endblock title %}
-{% block body %}
-    <h1>CREATE AUTHORS</h1>
+    <h1>Добавить нового автора</h1>
     <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form|crispy }}
-        <input type="submit" value="Create">
+        <input type="submit" value="Добавить">
     </form>
-{% endblock body %}
+    
+{% endblock content%}
