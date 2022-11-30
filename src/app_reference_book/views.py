@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from . import models, forms
 from django.views import generic
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
 ###########################CRUDL-PublishingHouse#################################
@@ -32,12 +33,14 @@ class DeletePublishingHouse(generic.DeleteView):
 
 #LIST
 class ListPublishingHouse(generic.ListView):
+    paginate_by = 15
     model = models.PublishingHouse
     template_name = 'app_reference_book/publishing_house_list.html'
 
 ###########################CRUDL-Authors#################################
 #CREATE 
-class CreateAuthors(generic.CreateView):
+class CreateAuthors(LoginRequiredMixin, generic.CreateView):
+    login_url = reverse_lazy('app_admin_portal:login')
     model = models.Authors
     form_class = forms.AuthorsForm
     template_name = 'app_reference_book/authors_create.html'
@@ -49,20 +52,24 @@ class ReadAuthors(generic.DetailView):
     template_name = 'app_reference_book/authors_read.html'
 
 #UPDATE
-class UpdateAuthors(generic.UpdateView):
+class UpdateAuthors(LoginRequiredMixin, generic.UpdateView):
+    login_url = reverse_lazy('app_admin_portal:login')
     model = models.Authors
     form_class = forms.AuthorsForm
     template_name = 'app_reference_book/authors_update.html'
     success_url = reverse_lazy('app_reference_book:authors-list')
 
 #DELETE
-class DeleteAuthors(generic.DeleteView):
+class DeleteAuthors(LoginRequiredMixin, generic.DeleteView):
+    login_url = reverse_lazy('app_admin_portal:login')
     model = models.Authors
     template_name = 'app_reference_book/authors_delete.html'
     success_url = reverse_lazy('app_reference_book:authors-list')
 
 #LIST
-class ListAuthors(generic.ListView):
+class ListAuthors(LoginRequiredMixin, generic.ListView):
+    paginate_by = 15
+    login_url = reverse_lazy('app_admin_portal:login')
     model = models.Authors
     template_name = 'app_reference_book/Authors_list.html'
 
@@ -94,6 +101,7 @@ class DeleteGenres(generic.DeleteView):
 
 #LIST
 class ListGenres(generic.ListView):
+    paginate_by = 15
     model = models.Genres
     template_name = 'app_reference_book/genres_list.html'
 
@@ -125,5 +133,38 @@ class DeleteSeries(generic.DeleteView):
 
 #LIST
 class ListSeries(generic.ListView):
+    paginate_by = 15
     model = models.Series
     template_name = 'app_reference_book/series_list.html'
+
+###########################CRUDL-Status#################################
+#CREATE 
+class CreateStatus(generic.CreateView):
+    model = models.Status
+    form_class = forms.StatusForm
+    template_name = 'app_reference_book/status_create.html'
+    success_url = reverse_lazy('app_reference_book:status-list')
+
+#READ
+class ReadStatus(generic.DetailView):
+    model = models.Status
+    template_name = 'app_reference_book/status_read.html'
+
+#UPDATE
+class UpdateStatus(generic.UpdateView):
+    model = models.Status
+    form_class = forms.StatusForm
+    template_name = 'app_reference_book/status_update.html'
+    success_url = reverse_lazy('app_reference_book:status-list')
+
+#DELETE
+class DeleteStatus(generic.DeleteView):
+    model = models.Status
+    template_name = 'app_reference_book/status_delete.html'
+    success_url = reverse_lazy('app_reference_book:status-list')
+
+#LIST
+class ListStatus(generic.ListView):
+    paginate_by = 15
+    model = models.Status
+    template_name = 'app_reference_book/status_list.html'

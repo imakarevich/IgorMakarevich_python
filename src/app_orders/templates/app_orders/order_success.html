@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}Заказ успешно принят! Спасибо за заказ!{% endblock title %}
+{% block body %}
+<div class="row mt-5">
+    <div class="col-2"></div>
+    <div class="col-8 text-center">
+        <p class="text-center fw-bolder"> Уважаемый {% if user.is_anonymous %} покупатель {% else %}{{ user }}{% endif %}, заказ успешно принят! Спасибо, что выбрали нас!</p>
+        <a href="{% url 'home_page' %}" class="btn btn-warning mx-auto">Вернуться на главную страницу</a>
+    </div>
+    <div class="col-2"></div>
+</div>
+{% endblock body %}

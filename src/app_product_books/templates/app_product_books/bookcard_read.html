@@ -6,7 +6,15 @@
     <div class="row">
         <div class="col-3">
             <img style="width: 100%;" src="{{ object.picture.url }}" alt="{{ object.picture }}">
-            {% if object.active %}<a style="margin-top: 5%;" class="btn btn-warning" href="#" role="button">Купить: {{ object.price }} руб.</a>
+            {% if object.active %}
+
+            <form action="{% url 'app_orders:cart' %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-warning">В корзину: {{ object.price }} руб.</button>
+            <input type="number" name="quantity" value="1" step="1" min="1" max="{{ object.availability }}">
+            <input type="hidden" name="book_pk" value="{{ object.pk }}">
+            </form>
+
             <p style="color: grey;">В наличии {{ object.availability }} шт.</p>
             {% else %}<a style="margin-top: 5%;" class="btn btn-danger" href="#" role="button">Нет в наличии</a>
             {% endif %}
@@ -63,6 +71,10 @@
                 <tr>
                     <td>Возрастные ограничения</td>
                     <td>{{ object.age_restrictions }}</td>
+                </tr>
+                <tr>
+                    <td>Рейтинг</td>
+                    <td><i class="bi bi-star text-warning"></i>{{ object.rating }}</td>
                 </tr>
             </table>    
         </div>

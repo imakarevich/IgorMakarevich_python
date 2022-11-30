@@ -1,18 +1,52 @@
-{% extends 'base.html' %}
-{% block title %}LIST SERIES{% endblock title %}
-{% block body %}
-    <h1>LIST SERIES</h1>
-    <a href="{% url 'app_reference_book:series-create' %}">ADD NEW</a>
-    <table class="table table-hover">
+{% extends 'base_admin_portal.html' %}
+{% block style %}   
+{% endblock style %}
+{% block content %}
+<div class="mt-2">
+    <h2 class="text-center">Серии 
+        <a href="{% url 'app_reference_book:series-create' %}" class="btn btn-light"><i class="bi bi-plus-circle"></i>Добавить</a>
+    </h2>
+    <div class="accordion accordion-flush" id="accordionFlushExample">
         {% for obj in object_list %}
-        <tr>
-            <td>{{obj.pk}}</td>
-            <td>{{obj.name}}</td>
-            <td style="width: 500px;">{{obj.description}}</td>
-            <td><a href="{% url 'app_reference_book:series-update' pk=obj.pk %}">Edit</a></td>
-            <td><a href="{% url 'app_reference_book:series-delete' pk=obj.pk %}">Delete</a></td>
-            <td><a href="{% url 'app_reference_book:series-detail' pk=obj.pk %}">Details</a></td>
-        </tr>
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse{{ obj.pk }}" aria-expanded="false" aria-controls="flush-collapse{{ obj.pk }}">
+                {{ obj.name }}
+                <div class="btn-group-sm" style="margin-block-start: 1%;">
+                    <a href="{% url 'app_reference_book:series-update' pk=obj.pk %}" class="btn btn-light"><i class="bi bi-pencil-square"></i></a>
+                    <a href="{% url 'app_reference_book:series-delete' pk=obj.pk %}" class="btn btn-light"><i class="bi bi-x-circle"></i></a>
+                </div>
+                </button>
+            </h2>
+            <div id="flush-collapse{{ obj.pk }}" class="accordion-collapse collapse" aria-labelledby="flush-heading{{ obj.pk }}" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                    <div class="">
+                        <p class="text-uppercase fw-bold ml-2">{{obj.name}}</p>
+                        <div class="overflow-auto">{{obj.description}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
         {% endfor %}
-    </table>
-{% endblock body %}
+    </div>    
+</div>
+<div class="d-flex justify-content-center">
+    <div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+        <a href="?page=1">&laquo; В начало</a>
+        <a href="?page={{ page_obj.previous_page_number }}"><i class="bi bi-arrow-left"></i></a>
+        {% endif %}
+
+        <span class="current">
+        Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}
+        </span>
+
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}"><i class="bi bi-arrow-right"></i></a>
+        <a href="?page={{ page_obj.paginator.num_pages }}">В конец &raquo;</a>
+        {% endif %}
+    </span>
+    </div>
+</div>
+{% endblock content %}

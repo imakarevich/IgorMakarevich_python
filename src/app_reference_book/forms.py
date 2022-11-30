@@ -20,3 +20,8 @@ class SeriesForm(forms.ModelForm):
     class Meta:
         model = models.Series
         fields = '__all__'
+
+class StatusForm(forms.ModelForm):
+    class Meta:
+        model = models.Status
+        fields = '__all__'

@@ -23,4 +23,9 @@ urlpatterns = [
     path('series_read/<int:pk>', views.ReadSeries.as_view(), name = 'series-detail'),
     path('series_update/<int:pk>', views.UpdateSeries.as_view(), name = 'series-update'),
     path('series_delete/<int:pk>', views.DeleteSeries.as_view(), name = 'series-delete'),
+    path('status/', views.ListStatus.as_view(), name = 'status-list'),
+    path('status_create/', views.CreateStatus.as_view(), name = 'status-create'),
+    path('status_read/<int:pk>', views.ReadStatus.as_view(), name = 'status-detail'),
+    path('status_update/<int:pk>', views.UpdateStatus.as_view(), name = 'status-update'),
+    path('status_delete/<int:pk>', views.DeleteStatus.as_view(), name = 'status-delete'),
 ]

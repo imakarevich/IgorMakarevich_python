@@ -23,13 +23,15 @@
                         <div class="dropdown dropend">
                             <a href="#" class="text-uppercase nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Справочники</a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Издательства</a></li>
+                                <li><a class="dropdown-item" href="{% url 'app_reference_book:publishing-house-list' %}">Издательства</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="{% url 'app_reference_book:authors-list' %}">Авторы</a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="#">Жанры</a></li>
+                                <li><a class="dropdown-item" href="{% url 'app_reference_book:genres-list' %}">Жанры</a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="#">Серии</a></li>
+                                <li><a class="dropdown-item" href="{% url 'app_reference_book:series-list' %}">Серии</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="{% url 'app_reference_book:status-list' %}">Статусы заказов</a></li>
                                 <!-- <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="#">Something else here</a></li> -->
                             </ul>
@@ -41,9 +43,9 @@
                         <div class="dropdown dropend">
                             <a href="#" class="text-uppercase nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Товары</a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Action</a></li>
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                <li><a class="dropdown-item" href="{% url 'app_product_books:bookcard-list' %}">Книги</a></li>
+                                {% comment %} <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li> {% endcomment %}
                             </ul>
                         </div>
                     </td>
@@ -54,14 +56,19 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>
+                    {% comment %} <td>
                         <a href="#" class="text-uppercase nav-link">A third link item</a>                        
+                    </td> {% endcomment %}
+                </tr>
+                <tr>
+                    <td>
+                        <a href="{% url 'app_admin_portal:logout' %}" class="text-uppercase nav-link">Выйти</a>                        
                     </td>
                 </tr>
             </table>
         </div>
         <div class="col-7 col-sm-7 col-md-8 col-lg-10">
-            {% block content%}{% endblock content%}
+            {% block content%} {{ user }} {% endblock content%}
         </div>
     </div>
 </div>

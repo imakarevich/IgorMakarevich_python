@@ -21,6 +21,7 @@ class BookCard(models.Model):
     )
     authors = models.ManyToManyField(
         reference.Authors,
+        related_name="Book",
         verbose_name="Авторы книги"
     )
     serie = models.ManyToManyField(
@@ -30,6 +31,7 @@ class BookCard(models.Model):
     )
     genre = models.ManyToManyField(
         reference.Genres,
+        related_name="Book",
         verbose_name="Жанр"
     )
     year_of_publishing = models.PositiveSmallIntegerField(
@@ -59,6 +61,7 @@ class BookCard(models.Model):
     )
     publishing = models.ManyToManyField(
         reference.PublishingHouse,
+        related_name="Book",
         verbose_name="Издательство"
     )
     availability = models.PositiveSmallIntegerField(
@@ -73,9 +76,11 @@ class BookCard(models.Model):
     description = models.TextField(
     )
     date_entered_catalog = models.DateField(
+        verbose_name="Дата внесения в каталог",
         auto_now_add=True
     )
-    date_last_modified = models.DateField(
+    updated_date = models.DateField(
+        verbose_name="Дата последнего изменения карточки",
         auto_now=True
     )
     def __str__(self):

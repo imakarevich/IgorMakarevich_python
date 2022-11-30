@@ -1,6 +1,17 @@
-{% extends 'base.html' %}
+{% extends 'base_home_page.html' %}
 {% load static %}
-{% block title %}Home Page{% endblock title %}
+{% load util %}
+{% block content %}
+
+<h1>hello world</h1>
+{% for key, value in data_for_accordion.items %}
+{{ forloop.counter }} {{ key }}: {{ value }}<br>
+{% endfor %}
+
+
+{{ counter_item_accordion }}
+
+{% comment %} {% block title %}Home Page{% endblock title %}
 {% block style %}
 <style>
     h2{
@@ -48,8 +59,7 @@
           <div class="row" style="margin-left: 15%;">
             {% for obj in object_list %}
             <div class="card">
-              <!-- <img class="card-img-top" style="width: 150px;" src="{{ obj.picture.url }}" alt="{{ obj.photo }}"> -->
-              <img class="card-img-top" src="{{ obj.picture.url }}" alt="{{ obj.photo }}">
+              {% if obj.picture %}<img class="card-img-top" src="{{ obj.picture.url }}" alt="{{ obj.picture }}">{% else %}<i class="bi bi-camera-video-off"></i>{% endif %}
               <a href="{% url 'app_product_books:bookcard-detail' pk=obj.pk %}" class="btn btn-warning stretched-link">Подробнее</a>
             </div>
             {% endfor %}
@@ -74,6 +84,6 @@
       <span class="visually-hidden">Next</span>
     </button>
   </div>
+ {% endcomment %}
 
-
-{% endblock body %}
+{% endblock content %}

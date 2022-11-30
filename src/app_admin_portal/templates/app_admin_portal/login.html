@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Вход в административный портал{% endblock title %}
+{% block style %}
+<style>
+    p{
+        color: red;
+    }
+</style>
+{% endblock style %}
+{% block body %}
+<div class="row">
+    <div class="col-xl-5 col-2 col-sm-4"></div>
+    <div class="col-xl-3 col-8 col-sm-4" style="margin-top: 30px;">
+        {% if form.errors %}
+        <p>Ваше имя пользователя и пароль не совпадают. Пожалуйста, попробуйте еще раз.</p>
+        {% endif %}
+
+        {% if next %}
+        {% if user.is_authenticated %}
+        <p>У вашего аккаунта нет доступа к этой странице. Пожалуйста, войдите с учетной записью, которая имеет доступ.</p>
+        {% else %}
+        <p>Пожалуйста, войдите, чтобы увидеть эту страницу.</p>
+        {% endif %}
+        {% endif %}
+
+        <form method="post" action="{% url 'app_admin_portal:login' %}">
+        {% csrf_token %}
+            <table>
+                <tr>
+                    <td>{{ form.username.label_tag }}</td>
+                    <td>{{ form.username }}</td>
+                </tr>
+                <tr>
+                    <td>{{ form.password.label_tag }}</td>
+                    <td>{{ form.password }}</td>
+                </tr>
+            </table>
+
+            <input type="submit" class="btn btn-success" value="Войти">
+            <input type="hidden" name="next" value="{{ next }}">
+        </form>
+
+        {# Assumes you set up the password_reset view in your URLconf #}
+        {% comment %} <p><a href="{% url 'app_admin_portal:password_reset' %}">Lost password?</a></p> {% endcomment %}
+    </div>
+    <div class="col-xl-4 col-2 col-sm-4"></div>
+</div>
+{% endblock body %}

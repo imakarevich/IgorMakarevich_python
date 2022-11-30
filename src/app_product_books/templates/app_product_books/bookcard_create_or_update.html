@@ -1,11 +1,14 @@
-{% extends 'base.html' %}
+{% extends 'base_admin_portal.html' %}
 {% load crispy_forms_tags %}
-{% block title %}{{ operation_name }} AUTHORS{% endblock title %}
-{% block body %}
-    <h1>{{ operation_name }}</h1>
+{% block content %}
+{% if operation_name == 'Create' %}
+    <h2 class="text-center">Добавить новую книгу</h2>
+{% else %}
+    <h2 class="text-center">{{ object.name }}</h2>
+{% endif %}
     <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form|crispy }}
-        <input type="submit" value="{{ operation_name }}">
+        <input type="submit" class="btn btn-warning" value="{% if operation_name == 'Create' %}Добавить{% else %}Обновить{% endif %}">
     </form>
-{% endblock body %}
+{% endblock content %}

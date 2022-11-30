@@ -26,6 +26,7 @@ urlpatterns = [
     path('', HomePage.as_view(), name = 'home_page'),
     path('app_product_books/', include('app_product_books.urls', namespace = 'app_product_books')),
     path('app_admin_portal/', include('app_admin_portal.urls', namespace = 'app_admin_portal')),
+    path('app_orders/', include('app_orders.urls', namespace = 'app_orders')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 

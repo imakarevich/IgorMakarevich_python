@@ -1,9 +1,9 @@
-{% extends 'base.html' %}
-{% block title %}DELETE PUBLISHING HOUSE{% endblock title %}
-{% block body %}
-    <h1>DELETE</h1>
-    <form action="" method="post">
+{% extends 'base_admin_portal.html' %}
+{% block content%}
+    <h2 class="text-center">Вы ходите удалить {{ object.name }}?</h2>
+    <form action="" method="post" class="text-center">
         {% csrf_token %}
-        <input type="submit" value="Delete">
+        <input type="submit" class="btn btn-danger" value="Удалить">
+        <a href="{% url 'app_reference_book:publishing-house-list' %}" class="btn btn-success">Отмена</a>
     </form>
-{% endblock body %}
+{% endblock content%}

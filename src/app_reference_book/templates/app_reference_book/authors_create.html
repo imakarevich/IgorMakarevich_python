@@ -2,11 +2,11 @@
 {% block content%}
 
 {% load crispy_forms_tags %}
-    <h1>Добавить нового автора</h1>
+    <h2 class="text-center">Добавить нового автора</h2>
     <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form|crispy }}
-        <input type="submit" value="Добавить">
+        <input type="submit" class="btn btn-warning" value="Добавить">
     </form>
     
 {% endblock content%}

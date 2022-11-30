@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'app_admin_portal',
     'app_home_page',
     'app_reference_book',
+    'app_orders',
     'app_product_books',
     'crispy_forms',
     "crispy_bootstrap5",
@@ -141,3 +142,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
 CRISPY_TEMPLATE_PACK = "bootstrap5"
+

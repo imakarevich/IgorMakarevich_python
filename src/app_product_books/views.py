@@ -42,5 +42,6 @@ class DeleteBookCard(generic.DeleteView):
 
 #LIST
 class ListBookCard(generic.ListView):
+    paginate_by = 15
     model = models.BookCard
     template_name = 'app_product_books/bookcard_list.html'
