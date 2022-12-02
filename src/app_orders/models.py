@@ -64,7 +64,7 @@ class OrderAll(models.Model):
         verbose_name='Статус заказа', 
         related_name='order',
         on_delete=models.PROTECT,
-        default='Ожидает обработки')
+        default=1)
     cart = models.ForeignKey(
         "app_orders.Cart",
         verbose_name="Корзина",
