@@ -1,0 +1,123 @@
+{% extends 'base_admin_portal.html' %}
+{% block content %}
+{% load util %}
+<div class="container">
+    <div class="row">  
+        <div class="col-12">
+            <h2 class="text-center">Профиль {{ object.username }}</h2>
+            <a href="{% url 'app_accounts:accounts-update' pk=object.pk %}" title="Редактировать" class="btn btn-light"><i class="bi bi-pencil-square"></i></a>
+            <table class="table">
+                <tr>
+                    <td>
+                        Логин
+                    </td>
+                    <td>
+                        {{ object.username }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Пароль
+                    </td>
+                    <td>
+                        {{ object.password }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        E-mail
+                    </td>
+                    <td>
+                        {{ object.email }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Имя
+                    </td>
+                    <td>
+                        {{ object.first_name }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Фамилия
+                    </td>
+                    <td>
+                        {{ object.last_name }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Телефон
+                    </td>
+                    <td>
+                        {{ object.extension.phone_number }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Группа
+                    </td>
+                    <td>
+                        {% for group in object.groups.all %}
+                        {{ group.name }}
+                        {% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Страна
+                    </td>
+                    <td>
+                        {{ object.extension.address_country }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Город
+                    </td>
+                    <td>
+                        {{ object.extension.address_city }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Индекс
+                    </td>
+                    <td>
+                        {{ object.extension.address_index }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Адрес 1
+                    </td>
+                    <td>
+                        {{ object.extension.address_fist }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Адрес 2
+                    </td>
+                    <td>
+                        {{ object.extension.address_second }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Дополнительная информация
+                    </td>
+                    <td>
+                        {{object.extension.description}}
+                    </td>
+                </tr>
+            </table>
+            {% if request.user|has_group:"Managers" %}
+            <a href="{% url 'app_accounts:accounts-list' %}" class="btn btn-success">Назад</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,153 @@
+{% extends 'base_admin_portal.html' %}
+{% block content %}
+<div class="mt-2">
+    <h2 class="text-center">Пользователи 
+    </h2>
+    <div class="accordion accordion-flush" id="accordionFlushExample">
+        {% for obj in object_list %}
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse{{ obj.pk }}" aria-expanded="false" aria-controls="flush-collapse{{ obj.pk }}">
+                {{forloop.counter}}. {{ obj.username }} - {{ obj.first_name }} {{ obj.last_name }}
+                <div class="btn-group-sm" style="margin-block-start: 1%;">
+                    <a href="{% url 'app_accounts:accounts-update' pk=obj.pk %}" class="btn btn-light"><i class="bi bi-pencil-square"></i></a>
+                    <a href="{% url 'app_accounts:accounts-detail' pk=obj.pk %}" class="btn btn-light" title="Подробнее"><i class="bi bi-person-badge"></i></a>
+                </div>
+                </button>
+            </h2>
+            <div id="flush-collapse{{ obj.pk }}" class="accordion-collapse collapse" aria-labelledby="flush-heading{{ obj.pk }}" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                    <table class="table">
+                        <tr>
+                            <td>
+                                Логин
+                            </td>
+                            <td>
+                                {{ obj.username }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Пароль
+                            </td>
+                            <td>
+                                {{ obj.password }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                E-mail
+                            </td>
+                            <td>
+                                {{ obj.email }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Имя
+                            </td>
+                            <td>
+                                {{ obj.first_name }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Фамилия
+                            </td>
+                            <td>
+                                {{ obj.last_name }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Телефон
+                            </td>
+                            <td>
+                                {{ obj.extension.phone_number }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Группа
+                            </td>
+                            <td>
+                                {% for group in obj.groups.all %}
+                                {{ group.name }}
+                                {% endfor %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Страна
+                            </td>
+                            <td>
+                                {{ obj.extension.address_country }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Город
+                            </td>
+                            <td>
+                                {{ obj.extension.address_city }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Индекс
+                            </td>
+                            <td>
+                                {{ obj.extension.address_index }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Адрес 1
+                            </td>
+                            <td>
+                                {{ obj.extension.address_fist }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Адрес 2
+                            </td>
+                            <td>
+                                {{ obj.extension.address_second }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Дополнительная информация
+                            </td>
+                            <td>
+                                {{obj.extension.description}}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>    
+</div>
+<div class="d-flex justify-content-center">
+    <div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+        <a href="?page=1">&laquo; В начало</a>
+        <a href="?page={{ page_obj.previous_page_number }}"><i class="bi bi-arrow-left"></i></a>
+        {% endif %}
+
+        <span class="current">
+        Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}
+        </span>
+
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}"><i class="bi bi-arrow-right"></i></a>
+        <a href="?page={{ page_obj.paginator.num_pages }}">В конец &raquo;</a>
+        {% endif %}
+    </span>
+    </div>
+</div>
+{% endblock content %}

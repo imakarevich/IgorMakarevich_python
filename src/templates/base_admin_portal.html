@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load util %}
 {% block title %}Административный портал{% endblock title %}
 {% block style %}
     <style>
@@ -16,6 +17,7 @@
 {% block body %}
 <div class="container">
     <div class="row">
+        {% if request.user|has_group:"Managers" %}
         <div class="col-5 col-sm-5 col-md-4 col-lg-2">
             <table class="table table-hover">
                 <tr>
@@ -52,7 +54,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <a href="#" class="text-uppercase nav-link">Заказы</a>
+                        <a href="{% url 'app_orders:orders-list' %}" class="text-uppercase nav-link">Заказы</a>
                     </td>
                 </tr>
                 <tr>
@@ -62,13 +64,63 @@
                 </tr>
                 <tr>
                     <td>
+                        <a href="{% url 'app_accounts:accounts-list' %}" class="text-uppercase nav-link">Пользователи</a>                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="{% url 'app_admin_portal:logout' %}" class="text-uppercase nav-link">Выйти</a>                        
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+        {% elif request.user|has_group:"Customers" %}
+        <div class="col-5 col-sm-5 col-md-4 col-lg-2">
+            <table class="table table-hover">
+                    {% comment %} <tr>
+                        <td>
+                            <div class="dropdown dropend">
+                                <a href="#" class="text-uppercase nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Справочники</a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="{% url 'app_reference_book:publishing-house-list' %}">Издательства</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="{% url 'app_reference_book:authors-list' %}">Авторы</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="{% url 'app_reference_book:genres-list' %}">Жанры</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="{% url 'app_reference_book:series-list' %}">Серии</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="{% url 'app_reference_book:status-list' %}">Статусы заказов</a></li>
+                                    <!-- <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="#">Something else here</a></li> -->
+                                </ul>
+                            </div>
+                        </td>
+                    </tr> {% endcomment %}
+                <tr>
+                    <td>
+                        <a href="{% url 'app_accounts:accounts-detail' pk=user.pk %}" class="text-uppercase nav-link">Данные профиля</a>
+                    </td>
+                </tr>
+                <tr>
+                <tr>
+                    <td>
+                        <a href="{% url 'app_orders:orders-list' %}" class="text-uppercase nav-link">История заказов</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
                         <a href="{% url 'app_admin_portal:logout' %}" class="text-uppercase nav-link">Выйти</a>                        
                     </td>
                 </tr>
             </table>
         </div>
+        {% endif %}
+        
         <div class="col-7 col-sm-7 col-md-8 col-lg-10">
-            {% block content%} {{ user }} {% endblock content%}
+            {% block content%}  {% endblock content%}
+            {% comment %} <a href="{{ request.META.HTTP_REFERER }}" class="btn btn-success">Назад</a> {% endcomment %}
         </div>
     </div>
 </div>

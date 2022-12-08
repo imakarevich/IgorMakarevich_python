@@ -35,10 +35,12 @@
                     <td>{{ form.password }}</td>
                 </tr>
             </table>
-
+            <br>
             <input type="submit" class="btn btn-success" value="Войти">
+            <a href="{% url 'app_admin_portal:registration' %}" class="btn btn-warning text-white">Зарегистрироваться</a>
             <input type="hidden" name="next" value="{{ next }}">
         </form>
+        
 
         {# Assumes you set up the password_reset view in your URLconf #}
         {% comment %} <p><a href="{% url 'app_admin_portal:password_reset' %}">Lost password?</a></p> {% endcomment %}

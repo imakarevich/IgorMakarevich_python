@@ -1,4 +1,34 @@
 {% extends 'base_admin_portal.html' %}
-{% comment %} {% block content%}
+{% load util %}
+{% block content%}
+{% if user|has_group:"Managers" %}
+<div class="container">
+    <div class="row">
+        <div class="col-4">
+            <h3>Статистика по заказам</h3>
+            <table class="table">
+                <tr>
+                    <td>
+                        Всего заказов:
+                    </td>
+                    <th>
+                        {{ orders_all }}
+                    </th>
+                </tr>
+                {% for key, value in orders_count_statuses_dict.items %}
+                <tr>
+                    <td>
+                        {{ key.name }}
+                    </td>
+                    <th>
+                        {{ value }}
+                    </th>
+                {% endfor %}
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+{% endif %}
 
-{% endblock content%} {% endcomment %}
+{% endblock content%}

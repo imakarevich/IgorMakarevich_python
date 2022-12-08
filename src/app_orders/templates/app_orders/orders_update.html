@@ -1,0 +1,10 @@
+{% extends 'base_admin_portal.html' %}
+{% load crispy_forms_tags %}
+{% block content%}
+    <h2 class="text-center">Заказ №{{ object.pk }}</h2>
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <input type="submit" class="btn btn-warning" value="Обновить">
+    </form>
+{% endblock content %}

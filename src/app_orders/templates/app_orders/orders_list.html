@@ -1,0 +1,57 @@
+{% extends 'base_admin_portal.html' %}
+{% block content %}
+<div class="mt-2">
+    <h2 class="text-center">Заказы</h2>
+    <table class="table">
+        <tr>
+            <td>Заказ №</td>
+            <td>Пользователь</td>
+            <td>Товары</td>
+            <td>Статус</td>
+            <td>Телефон</td>
+            <td>Адрес</td>
+            <td>EMAIL</td>
+            <td>Создан</td>
+            <td>Стоимость</td>
+        </tr>
+        {% for obj in object_list %}
+        <tr>
+            <td>{{ obj.pk }}</td>
+            <td>{{ obj.cart.user.username }}</td>
+            <td>{% for book in obj.cart.book_in_cart.all %}
+                <a href="{% url 'app_product_books:bookcard-detail' pk=book.book.pk %}">{{forloop.counter}}. {{ book.book.name }}/{{ book.quantity }}шт.</a>
+                <a href="{% url 'app_orders:delete-book-from-order' pk=book.pk %}" style="color: red;"><i class="bi bi-patch-minus"></i></a><br>
+                {% endfor %}
+                <a href="{% url 'app_orders:add-book-in-cart-from-order-update' pk=obj.pk %}" class="btn btn-sm btn-light"><i class="bi bi-plus-circle"></i></a>
+            </td>
+            <td>{{ obj.status.name }}</td>
+            <td>{{ obj.phone_number }}</td>
+            <td>{{ obj.address }}</td>
+            <td>{{ obj.email }}</td>
+            <td>{{ obj.created_date|time:"H:i" }} {{ obj.created_date|date:"d.m.Y" }}</td>
+            <td>{{ obj.cart.total_price_cart }}</td>
+            <td><a href="{% url 'app_orders:orders-update' pk=obj.pk %}" class="btn btn-light"><i class="bi bi-pencil-square"></i></a></td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+<div class="d-flex justify-content-center">
+    <div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+        <a href="?page=1">&laquo; В начало</a>
+        <a href="?page={{ page_obj.previous_page_number }}"><i class="bi bi-arrow-left"></i></a>
+        {% endif %}
+
+        <span class="current">
+        Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}
+        </span>
+
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}"><i class="bi bi-arrow-right"></i></a>
+        <a href="?page={{ page_obj.paginator.num_pages }}">В конец &raquo;</a>
+        {% endif %}
+    </span>
+    </div>
+</div>
+{% endblock content %}

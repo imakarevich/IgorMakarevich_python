@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'app_home_page',
     'app_reference_book',
     'app_orders',
+    'app_accounts',
     'app_product_books',
     'crispy_forms',
     "crispy_bootstrap5",
@@ -111,7 +112,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru-ru'
 
 TIME_ZONE = 'UTC'
 

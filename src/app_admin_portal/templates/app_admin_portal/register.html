@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block body %} 
+
+{% load crispy_forms_tags %}         
+
+<style>
+    .messages{
+        color: red;
+        font-weight: bold;
+    }
+</style>
+<div class="container py-3">
+    <div class="row">
+        <div class="col-3"></div>
+        <div class="col-6">
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            <h1>Регистрация</h1>
+            <form method="POST">
+                {% csrf_token %}
+                {{ registration_user_form|crispy }}    
+                {{ user_extension_form|crispy }}                
+                <button class="btn btn-warning text-white" type="submit">Зарегистрироватьcя</button>
+                <a href="{% url 'app_admin_portal:login' %}" class="btn btn-warning text-white">Назад</a>
+            </form>
+        </div>
+        <div class="col-3"></div>
+    </div>
+</div>
+
+{% endblock body %}

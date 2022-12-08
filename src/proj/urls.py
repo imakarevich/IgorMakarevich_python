@@ -28,6 +28,7 @@ urlpatterns = [
     path('app_admin_portal/', include('app_admin_portal.urls', namespace = 'app_admin_portal')),
     path('app_orders/', include('app_orders.urls', namespace = 'app_orders')),
     path('app_home_page/', include('app_home_page.urls', namespace = 'app_home_page')),
+    path('app_accounts/', include('app_accounts.urls', namespace = 'app_accounts')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 

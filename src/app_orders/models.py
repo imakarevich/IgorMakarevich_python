@@ -19,6 +19,7 @@ class Cart(models.Model):
         for position_in_cart in all_positions_in_cart:
             total_price_cart += position_in_cart.total_price_position
         return total_price_cart
+        
     def __str__(self):
         return f'{self.user}_{self.pk}'
 
@@ -34,7 +35,7 @@ class BookInCart(models.Model):
         related_name="book_in_cart",
         on_delete=models.CASCADE
         )
-    quantity = models.IntegerField(
+    quantity = models.PositiveSmallIntegerField(
         verbose_name="Quantity",
         default=1
     )
@@ -53,8 +54,6 @@ class BookInCart(models.Model):
     )
     @property
     def total_price_position(self):
-        # default_status = Status.objects.get(name='Ожидает обработки')
-        # print(default_status)
         return self.quantity*self.price
 
 
