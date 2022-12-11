@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 from django.views import generic
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -17,10 +18,6 @@ import datetime
 
 
 # Create your views here.
-
-# class AdminPortalForEmployees(LoginRequiredMixin, generic.TemplateView):
-#     login_url = reverse_lazy('app_admin_portal:login')
-#     template_name = "app_admin_portal/admin_portal_main.html"
 
 
 def register_request(request):
@@ -46,24 +43,13 @@ def register_request(request):
     context['user_extension_form'] = UserExtensionForm()
     return render (request=request, template_name="app_admin_portal/register.html", context=context)
 
-    # def get_context_data(self, *args, **kwargs):
-    #     context = super().get_context_data(*args, **kwargs)
-    
-    #     #Days ago, when new book appeared
-    #     td = datetime.timedelta(days=20)        
-    #     objs = BookCard.objects.filter(date_entered_catalog__gt=datetime.date.today() - td)
-    #     context['object_list'] = objs
-    #     print(context)
-    #     return context
-
+@login_required
 def admin_portal_main(request):
     context={}
     user = request.user
     if has_group(user, "Customers"):
         td = datetime.date.today()-datetime.timedelta(days=5)
-        print(td)
         active_orders_for_customers = orders_models.OrderAll.objects.filter(Q(cart__user=user) & Q(created_date__gt=td))
-        print('!!!!!!!!!!!!!!!!!!!!1', active_orders_for_customers, '!!!!!!!!!!!!!!!!!')
         context['active_orders_for_customers'] = active_orders_for_customers
     else:
         orders_all = orders_models.OrderAll.objects.count()

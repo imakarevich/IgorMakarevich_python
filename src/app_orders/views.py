@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect, HttpResponseRedirect
+from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.views.generic import DeleteView,CreateView,TemplateView, ListView, UpdateView
 from . import models
 from app_product_books.models import BookCard
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from . import forms
 from app_home_page.templatetags.util import has_group
 from django.db.models import Q
@@ -86,16 +88,14 @@ class Order(CreateView):
             pk=self.request.session.get('cart_pk'))
         form.instance.cart = cart
         return super().form_valid(form)
-    # def get_success_url(self):
-    #     self.request.session['order_pk'] = 
-    #     return super().get_success_url()
 
 class OrderSuccess(TemplateView):
     template_name = 'app_orders/order_success.html'
 
-class OrderAllList(ListView):
+
+class OrderAllList(LoginRequiredMixin, ListView):
     paginate_by = 10
-    # login_url = reverse_lazy('app_admin_portal:login')
+    login_url = reverse_lazy('app_admin_portal:login')
     model = models.OrderAll
     template_name = 'app_orders/orders_list.html'
     ordering = ['-created_date']
@@ -112,7 +112,10 @@ class OrderAllList(ListView):
         
         return super().get_queryset()
 
-class AddBookInCartFromOrderUpdate(CreateView):
+
+class AddBookInCartFromOrderUpdate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+    login_url = reverse_lazy('app_admin_portal:login')
+    permission_required = 'app_accounts.access_for_managers_admin'
     model = models.BookInCart
     form_class = forms.BookInCartForm
     template_name = 'app_orders/add_book_in_cart_from_order_update.html'
@@ -131,37 +134,16 @@ class AddBookInCartFromOrderUpdate(CreateView):
         return super().form_valid(form)
 
 
-class OrderAllUpdate(UpdateView):
+class OrderAllUpdate(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+    permission_required = 'app_accounts.access_for_managers_admin'
+    login_url = reverse_lazy('app_admin_portal:login')
     model = models.OrderAll
     form_class = forms.OrderAllForm
     template_name = 'app_orders/orders_update.html'
     success_url = reverse_lazy('app_orders:orders-list')
-    
 
-# def order_update(request, pk):
-#     context = {}
-#     order = models.OrderAll.objects.get(pk=pk)
-#     if request.method == 'POST':
-#         book_in_cart_form_list_post = []
-#         order_all_form = forms.OrderAllForm(request.POST, instance=order)
-#         if order_all_form.is_valid():
-#             order_all_form.save()
-#             return redirect(reverse_lazy('app_orders:orders-list'))
-#         else:
-#             messages.error(request, ('Пожалуйста, исправьте ошибки.'))    
-
-#     else:
-#         order_all_form = forms.OrderAllForm(instance=order)
-#         book_in_cart_form_list = []
-#         for book_in_cart in order.cart.book_in_cart.all():
-#             book_in_cart_form_list.append(forms.BookInCartForm(instance=book_in_cart)) 
-        
-#         context['order_all_form'] = order_all_form
-#         context['order'] = order
-#         context['book_in_cart_form_list'] = book_in_cart_form_list
-
-#     return render(request, 'app_orders/orders_update.html', context=context)
-
+@login_required
+@permission_required('app_accounts.access_for_managers_admin')
 def delete_book_from_order(request, pk):
     models.BookInCart.objects.get(pk=pk).delete()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

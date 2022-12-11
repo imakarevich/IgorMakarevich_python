@@ -21,7 +21,7 @@ from django.conf.urls.static import static
 from app_home_page.views import HomePage
 
 urlpatterns = [
-    path('admin/', admin.site.urls), 
+    path('s-admin/', admin.site.urls), 
     path('app_reference_book/', include('app_reference_book.urls', namespace = 'app_reference_book')),
     path('', HomePage.as_view(), name = 'home_page'),
     path('app_product_books/', include('app_product_books.urls', namespace = 'app_product_books')),

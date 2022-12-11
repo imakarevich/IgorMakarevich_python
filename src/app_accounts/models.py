@@ -53,3 +53,6 @@ class UserExtension(models.Model):
         null=True
     )
 
+    class Meta:
+        permissions = (("access_for_managers_admin", "Managers and admin can see it"), )
+
