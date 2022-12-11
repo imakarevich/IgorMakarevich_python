@@ -1,7 +1,7 @@
 {% extends 'base_admin_portal.html' %}
 {% load util %}
 {% block content%}
-{% if user|has_group:"Managers" %}
+{% if request.user|has_group:"Managers" or request.user|has_group:"Admin" %}
 <div class="container">
     <div class="row">
         <div class="col-4">
@@ -27,6 +27,52 @@
                 </tr>
             </table>
         </div>
+    </div>
+</div>
+{% elif request.user|has_group:"Customers" %}
+<div class="container">
+    <div class="row py-3">
+        
+        {% if active_orders_for_customers %}
+        <h3 class="text-start">Заказы {{ request.user }} за последние 3 дня:</h3>
+        {% for order in active_orders_for_customers %}
+        <div class="col-4 py-3">
+            <h4>Заказ №{{ order.pk }}</h4>
+        <table class="table">
+            <tr>
+                <th>
+                    Товары
+                </th>
+                <td>
+                    {% for book in order.cart.book_in_cart.all %}
+                    <a href="{% url 'app_product_books:bookcard-detail' pk=book.book.pk %}">{{forloop.counter}}. {{ book.book.name }}/{{ book.quantity }}шт.</a><br>
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    Статус
+                </th>
+                <td>
+                    {{ order.status.name }}
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    Создан
+                </th>
+                <td>
+                    {{ order.created_date }}
+                </td>
+            </tr>
+        </table>
+        </div>
+        {% endfor %}
+        {% else %}
+            <h2 class="text-center mt-5">Мы рады Вас видеть {{ request.user }}!</h2>
+            <h6 class="text-center mt-5">В последнее время Вы ничего не заказывали:( <a href="{% url 'home_page' %}">Отправиться за покупками!</a> </h6>
+        {% endif %}
+
     </div>
 </div>
 {% endif %}

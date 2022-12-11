@@ -19,3 +19,8 @@ def has_group(user, group_name):
     except Group.DoesNotExist:
         group = None
     return group in user.groups.all()
+
+@register.filter
+def discont(price):
+    price = price*20/100
+    return price

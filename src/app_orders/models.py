@@ -27,6 +27,7 @@ class BookInCart(models.Model):
     book = models.ForeignKey(
         "app_product_books.BookCard",
         verbose_name="Book in cart",
+        related_name='books_to_book_in_cart',
         on_delete=models.PROTECT
         )
     cart = models.ForeignKey(

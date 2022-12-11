@@ -6,6 +6,7 @@ from . import models
 from app_product_books.models import BookCard
 from . import forms
 from app_home_page.templatetags.util import has_group
+from django.db.models import Q
 
 
 # Create your views here.
@@ -97,15 +98,18 @@ class OrderAllList(ListView):
     # login_url = reverse_lazy('app_admin_portal:login')
     model = models.OrderAll
     template_name = 'app_orders/orders_list.html'
-    ordering = ['-updated_date']
+    ordering = ['-created_date']
     def get_success_url(self):
         self.request.session['cart_pk']
         return super().get_success_url()
-    def get_queryset(self):!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        # if self.request.user.is_authenticated():
-        # user = self.request.user
-        # qs = user.carts.order.all()
-        # print(qs)!!!!!!!!!!!!!!!!!!!!!!!!
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_authenticated and has_group(user, 'Customers'):
+            if user.carts.all():
+                qs = models.OrderAll.objects.filter(cart__user=user).order_by('-created_date')
+                print(qs)
+                return qs
+        
         return super().get_queryset()
 
 class AddBookInCartFromOrderUpdate(CreateView):

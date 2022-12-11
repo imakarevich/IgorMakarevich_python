@@ -17,7 +17,7 @@
 {% block body %}
 <div class="container">
     <div class="row">
-        {% if request.user|has_group:"Managers" %}
+        {% if request.user|has_group:"Managers" or request.user|has_group:"Admin" %}
         <div class="col-5 col-sm-5 col-md-4 col-lg-2">
             <table class="table table-hover">
                 <tr>

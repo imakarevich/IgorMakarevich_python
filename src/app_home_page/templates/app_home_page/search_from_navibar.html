@@ -1,0 +1,34 @@
+{% extends 'base_home_page.html' %}
+{% load static %}
+{% load util %}
+{% block content %}
+<style>
+    .h100 {
+    flex-grow: 3
+}
+.flex1 {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+</style>
+<div class="container">
+    <div class="row">
+        {% for obj in found_objects_from_navibar %}
+        <div class="col-3 p-0">
+            <div class="container-fluid p-0">
+                <div class="card shadow-sm overflow-hidden" style="max-height: 20em; margin-left: 1%;">
+                    {% if obj.picture %}<img class="card-img-top mx-auto" style="max-height: 11em; max-width: 10em;" src="{{ obj.picture.url }}" alt="{{ obj.picture }}">{% else %}<i class="bi bi-camera-video-off"></i>{% endif %}
+                    <div class="card-body p-1 flex1">
+                      <h5 class="card-title text-center">{{ obj.name|truncatechars:15 }}</h5>
+                      <p class="card-text m-0 pt-0 h100" style="font-size:small;">{{ obj.description|truncatechars:100 }}</p>
+                      <a href="{% url 'app_product_books:bookcard-detail' pk=obj.pk %}" class="stretched-link"></a>
+                      <span class="d-block p-0 m-0 position-absolute bottom-0 start-0 text-bg-warning container-fluid fw-semibold text-center">Цена: {{ obj.price }} р.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div> 
+{% endblock content %}

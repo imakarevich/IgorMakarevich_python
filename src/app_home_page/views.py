@@ -1,12 +1,26 @@
 from django.shortcuts import render
+from django.db.models import Count
 from django.views import generic
 from app_product_books.models import BookCard
 from app_reference_book.models import Authors, PublishingHouse, Genres
+from app_orders.models import BookInCart 
 import datetime
 from django.db.models import Q
 
 
 # Create your views here.
+   
+
+def get_objects_bookcard_name(accordion_position_list):
+            if accordion_position_list:
+                objects = []
+                for pos in accordion_position_list:
+                    objects += BookCard.objects.filter(name=pos)
+                return objects
+            else:
+                return []
+
+#custom functions
 def get_data_for_accordion():
     book_names_set = set()
     book_authors_dict = dict()
@@ -41,18 +55,7 @@ def get_data_for_accordion():
               'Возрастные ограничения':dict(sorted(book_age_restrictions_dict.items())),
                           }
 
-    return data_for_accordion   
-
-def get_objects_bookcard_name(accordion_position_list):
-            if accordion_position_list:
-                objects = []
-                for pos in accordion_position_list:
-                    objects += BookCard.objects.filter(name=pos)
-                return objects
-            else:
-                return []
-
-#custom functions
+    return data_for_accordion
 def get_objects_bookcard_authors(accordion_position_list):
             if accordion_position_list:
                 objects = []
@@ -125,47 +128,16 @@ class HomePage(generic.TemplateView):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-    
-        #Days ago, when new book appeared
-        td = datetime.timedelta(days=20)        
-        objs_new = BookCard.objects.filter(date_entered_catalog__gt=datetime.date.today() - td)
-        context['object_list'] = objs_new
+        
+        books_new = BookCard.objects.all().order_by('-date_entered_catalog')[:4]
+        top_sales = BookCard.objects.annotate(num_books=Count('books_to_book_in_cart__quantity')).order_by('-num_books')[:4]
+        discont = BookCard.objects.all().order_by('date_entered_catalog')[:4]
+
+        context['discont'] = discont
+        context['top_sales'] = top_sales
+        context['books_new'] = books_new
         context['data_for_accordion'] = get_data_for_accordion()
 
-        #
-        # book_names_set = set()
-        # book_authors_dict = dict()
-        # book_genres_dict = dict()
-        # book_years_of_publishing_dict = dict()
-        # book_covers_dict = dict()
-        # book_formats_dict = dict()
-        # book_age_restrictions_dict = dict() 
-        # book_publishings_dict = dict()
-
-        # objects_books = BookCard.objects.all()
-        # for book in objects_books:
-        #     book_names_set.add(book.name)
-        #     for authors in book.authors.all():
-        #         book_authors_dict[authors.first_last_name] = authors.Book.all().count()
-        #     for genre in book.genre.all():
-        #         book_genres_dict[genre.name] = genre.Book.all().count()
-        #     book_years_of_publishing_dict[book.year_of_publishing] = BookCard.objects.filter(year_of_publishing=book.year_of_publishing).count()
-        #     book_covers_dict[book.cover] = BookCard.objects.filter(cover=book.cover).count()
-        #     book_formats_dict[book.format] = BookCard.objects.filter(format=book.format).count()
-        #     book_age_restrictions_dict[book.age_restrictions] = BookCard.objects.filter(age_restrictions=book.age_restrictions).count()
-        #     for publishing in book.publishing.all():
-        #         book_publishings_dict[publishing.name] = publishing.Book.all().count()
-
-        # data_for_accordion = {'Книги':sorted(book_names_set),
-        #                     'Авторы':dict(sorted(book_authors_dict.items())),
-        #                     'Издательство':dict(sorted(book_publishings_dict.items())),
-        #                     'Жанры':dict(sorted(book_genres_dict.items())),
-        #                     'Год издания':dict(sorted(book_years_of_publishing_dict.items())),
-        #                     'Переплет':dict(sorted(book_covers_dict.items())),
-        #                     'Формат':dict(sorted(book_formats_dict.items())),
-        #                     'Возрастные ограничения':dict(sorted(book_age_restrictions_dict.items())),
-        #                     }
-        # context['data_for_accordion'] = data_for_accordion
         return context
     
 def search_from_accordion(request):
@@ -223,6 +195,28 @@ def search_from_accordion(request):
     )
 
 
-
+def search_from_navibar(request):
+    context = {}
+    found_objects_from_navibar = set()
+    context['data_for_accordion'] = get_data_for_accordion()
+    if request.method == "GET":
+        search_from_navibar = request.GET.get('search_from_navibar')
+        search_from_navibar_key_words_list = search_from_navibar.split(' ')
+        for key_word in search_from_navibar_key_words_list:
+            if len(key_word) < 2:
+                continue
+            qs = BookCard.objects.filter(
+                Q(name__contains=key_word) | Q(name__contains=key_word.capitalize()) | Q(name__contains=key_word.upper()) | 
+                Q(authors__first_last_name__contains=key_word) | Q(authors__first_last_name__contains=key_word.capitalize()) | Q(authors__first_last_name__contains=key_word.upper()) |
+                Q(genre__name__contains=key_word) | Q(genre__name__contains=key_word.capitalize()) | Q(genre__name__contains=key_word.upper()))
+            for obj in qs:
+                found_objects_from_navibar.add(obj)
+        context['found_objects_from_navibar'] = found_objects_from_navibar
+                 
+    return render(
+            request=request,
+            template_name='app_home_page/search_from_navibar.html',
+            context=context
+        )
 
 
