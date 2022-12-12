@@ -43,6 +43,8 @@ def register_request(request):
     context['user_extension_form'] = UserExtensionForm()
     return render (request=request, template_name="app_admin_portal/register.html", context=context)
 
+
+
 @login_required
 def admin_portal_main(request):
     context={}

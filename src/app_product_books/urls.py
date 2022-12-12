@@ -8,4 +8,5 @@ urlpatterns = [
     path('bookcard_read/<int:pk>', views.ReadBookCard.as_view(), name = 'bookcard-detail'),
     path('bookcard_update/<int:pk>', views.UpdateBookCard.as_view(), name = 'bookcard-update'),
     path('bookcard_delete/<int:pk>', views.DeleteBookCard.as_view(), name = 'bookcard-delete'),
+    path('bookcomments_create/<int:pk>', views.CreateBookCommentsView.as_view(), name = 'bookcomments-create'),
 ]

@@ -79,10 +79,14 @@
                                         <td>Доступен для заказа</td>
                                         <td>{% if obj.active %}ДА{% else %}НЕТ{% endif %}</td>
                                     </tr>
+                                    {% if obj.bookcomments.all %}
                                     <tr>
                                         <td>Рейтинг</td>
-                                        <td><i class="bi bi-star text-warning"></i>{{ obj.rating }}</td>
+                                        <td><i class="bi bi-star text-warning"></i>
+                                            {{ obj.rating_average }}
+                                        </td>
                                     </tr>
+                                    {% endif %}
                                     <tr>
                                         <td>Дата внесения в каталог</td>
                                         <td>{{ obj.date_entered_catalog|date:'d-m-Y' }}</td>

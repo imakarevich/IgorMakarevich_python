@@ -1,7 +1,10 @@
 from django.db import models
+from django.core.validators import MaxValueValidator, MinValueValidator
 from app_reference_book import models as reference
+from django.contrib.auth import get_user_model
+from django.db.models import Avg
 # Create your models here.
-
+User = get_user_model()
 
 class BookCard(models.Model):
     name = models.CharField(
@@ -70,9 +73,6 @@ class BookCard(models.Model):
     active = models.BooleanField(
         verbose_name="Доступен для заказа",
     )
-    rating = models.PositiveSmallIntegerField(
-        verbose_name="Рейтинг",
-    )
     description = models.TextField(
     )
     date_entered_catalog = models.DateField(
@@ -83,10 +83,53 @@ class BookCard(models.Model):
         verbose_name="Дата последнего изменения карточки",
         auto_now=True
     )
+    
     def __str__(self):
         return self.name
-    
 
+    @property
+    def rating_average(self):
+        if BookComments.objects.filter(bookcard=self):
+            avg = BookComments.objects.filter(bookcard=self).aggregate(Avg('rate'))
+            print(round(avg['rate__avg'],2))
+            # BookCard.objects.get(self).aggregate(Avg('bookcomments__rate'))
+            return round(avg['rate__avg'],2)
+        
+
+class BookComments(models.Model):
+    user = models.ForeignKey(
+        User,
+        on_delete=models.PROTECT,
+        related_name='book_comments',
+        verbose_name='Комментарий пользователя',
+        null=True,
+        blank=True
+    )
+    bookcard = models.ForeignKey(
+        'app_product_books.BookCard',
+        verbose_name='Книга', 
+        related_name='bookcomments',
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True
+    )
+    rate = models.PositiveSmallIntegerField(
+        validators=[MinValueValidator(1), MaxValueValidator(10)],
+        verbose_name="Рейтинг",
+        null=True,
+        blank=True
+    )
+    comment = models.TextField(
+        verbose_name="Комментарий",
+    )
+    created_date = models.DateTimeField(
+    "Created date",
+    auto_now_add=True
+    )
+    updated_date = models.DateTimeField(
+    "Update date",
+    auto_now=True
+    )        
 
 
 

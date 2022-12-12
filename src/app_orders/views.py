@@ -127,8 +127,6 @@ class AddBookInCartFromOrderUpdate(LoginRequiredMixin, PermissionRequiredMixin, 
         cart = models.Cart.objects.get(pk=order.cart.pk)
         book_pk = form.cleaned_data.get('book').pk
         form.instance.price = BookCard.objects.get(pk=book_pk).price
-            # print(type(BookCard.objects.get(pk=book_pk).price))
-            # c = 2/0
         form.instance.cart = cart
         self.object = form.save()
         return super().form_valid(form)

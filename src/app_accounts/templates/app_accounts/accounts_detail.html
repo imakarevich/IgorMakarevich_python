@@ -17,10 +17,13 @@
                 </tr>
                 <tr>
                     <td>
-                        Пароль
+                        Пароль 
                     </td>
                     <td>
                         {{ object.password }}
+                        {% if request.user|has_group:"Customers" %}
+                        <a href="{% url 'app_admin_portal:change-password' %}" class="btn btn-danger btn-sm">Сменить пароль</a>
+                        {% endif %}
                     </td>
                 </tr>
                 <tr>
